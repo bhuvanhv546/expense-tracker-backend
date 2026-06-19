@@ -13,6 +13,35 @@ const { expenseValidation } = require('../middleware/validation');
 
 const router = express.Router();
 
+const Expense = require('../models/Expense');
+
+router.post('/auto-import', async (req, res) => {
+  try {
+
+    const expense = await Expense.create({
+      userId: '6a3424ee480873be685426a2',
+      amount: req.body.amount,
+      merchant: req.body.merchant || 'PhonePe',
+      category: 'Other',
+      source: 'PhonePe',
+      timestamp: new Date()
+    });
+
+    res.status(201).json({
+      success: true,
+      data: expense
+    });
+
+  } catch (err) {
+
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+
+  }
+});
+      
 router.use(protect);
 
 router.route('/')
