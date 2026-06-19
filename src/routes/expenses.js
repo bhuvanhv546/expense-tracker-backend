@@ -41,7 +41,12 @@ router.post('/auto-import', async (req, res) => {
 
   }
 });
-      
+router.get('/test-public', (req, res) => {
+  res.json({
+    success: true,
+    message: 'public route working'
+  });
+});      
 router.use(protect);
 
 router.route('/')
